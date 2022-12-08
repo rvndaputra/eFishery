@@ -3,11 +3,15 @@ import { NoUndefinedField } from "../types";
 // ==============================
 //  Normalized Types
 // ==============================
-export interface NormalizedOptionArea
-  extends NoUndefinedField<OptionAreaQueryResponse> {}
+export interface NormalizedOptionArea {
+  [key: string]: unknown;
+  __raw: NoUndefinedField<OptionAreaQueryResponse>[];
+}
 
-export interface NormalizedOptionSize
-  extends NoUndefinedField<OptionSizeQueryResponse> {}
+export interface NormalizedOptionSize {
+  size: number[];
+  __raw: NoUndefinedField<OptionSizeQueryResponse>[];
+}
 
 // ==============================
 //  Option Area Types
@@ -21,5 +25,5 @@ export interface OptionAreaQueryResponse {
 //  Option Size Types
 // ==============================
 export interface OptionSizeQueryResponse {
-  size: number | null;
+  size: string | null;
 }

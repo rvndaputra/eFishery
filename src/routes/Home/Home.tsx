@@ -24,6 +24,10 @@ const Home: FC = () => {
     setOpenFilter(true);
   };
 
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+
   const handleOpenAddList = () => {
     setOpenModal(true);
   };
@@ -46,10 +50,10 @@ const Home: FC = () => {
         <Drawer
           title="Filter"
           placement="right"
-          onClose={() => setOpenFilter(false)}
+          onClose={handleCloseFilter}
           open={openFilter}
         >
-          <Filter />
+          <Filter onCloseFilter={handleCloseFilter} />
         </Drawer>
         <Modal
           open={openModal}

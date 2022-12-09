@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { Button, Form, Input, Select, Space } from "antd";
 
 import { useHomeContext } from "../../context/home";
@@ -14,7 +15,12 @@ const tailLayout = {
   wrapperCol: { offset: 6, span: 14 },
 };
 
-const Filter = () => {
+interface FilterProps {
+  onCloseFilter: () => void;
+}
+
+const Filter: FC<FilterProps> = (props) => {
+  const { onCloseFilter } = props;
   const { emitter, options } = useHomeContext();
   const [form] = Form.useForm<FormFilter>();
 
@@ -23,6 +29,7 @@ const Filter = () => {
 
   const onFinish = (values: FormFilter) => {
     emitter.emit("@filter/submit", values);
+    onCloseFilter();
   };
 
   const onProvinceChange = () => {
@@ -31,6 +38,7 @@ const Filter = () => {
 
   const onReset = () => {
     form.resetFields();
+    onCloseFilter();
     emitter.emit("@filter/submit", form.getFieldsValue());
   };
 

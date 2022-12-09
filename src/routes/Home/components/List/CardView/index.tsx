@@ -43,9 +43,15 @@ const PriceListCardView: FC<PriceListCardViewProps> = (props) => {
     return acc;
   }, Object.create(null));
 
-  const columns = getColumns(options);
+  const columns = getColumns(options).filter(
+    (x) => x.key !== groupBy && x.key !== subGroupBy
+  );
 
   const groupOptions = [
+    {
+      value: "komoditas",
+      label: "Komoditas",
+    },
     {
       value: "area_provinsi",
       label: "Provinsi",
@@ -53,10 +59,6 @@ const PriceListCardView: FC<PriceListCardViewProps> = (props) => {
     {
       value: "area_kota",
       label: "Kota",
-    },
-    {
-      value: "komoditas",
-      label: "Komoditas",
     },
     {
       value: "size",
@@ -73,7 +75,7 @@ const PriceListCardView: FC<PriceListCardViewProps> = (props) => {
       type: "select",
       options: groupOptions,
     },
-    Save: {
+    Simpan: {
       type: "submit",
     },
   };

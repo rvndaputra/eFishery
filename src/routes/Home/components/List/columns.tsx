@@ -1,5 +1,7 @@
+import { Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
+
 import type { NormalizedFishPriceList } from "../../../../model/fish-price-list";
 import type { AllOptionsRepository } from "../../../../model/options";
 
@@ -10,13 +12,16 @@ export const getColumns = (options: AllOptionsRepository) => {
     {
       title: "#",
       key: "index",
+      align: "right",
       width: "20px",
+      fixed: "left",
       render: (_: string, record, index: number) => (1 - 1) * 10 + index + 1,
     },
     {
       title: "Komoditas",
       dataIndex: "komoditas",
       key: "komoditas",
+      fixed: "left",
     },
     {
       title: "Provinsi",
@@ -38,18 +43,17 @@ export const getColumns = (options: AllOptionsRepository) => {
       })),
       onFilter: (value, record) => record.area_kota === value,
     },
-
     {
-      title: "Harga",
+      title: "Harga (Rp)",
       dataIndex: "price",
       key: "price",
+      align: "right",
       sorter: {
-        compare: (a, b) => a.price.length - b.price.length,
+        compare: (a, b) => parseInt(a.price) - parseInt(b.price),
         multiple: 1,
       },
       render: (value) =>
         new Intl.NumberFormat("id", {
-          style: "currency",
           currency: "IDR",
         }).format(value),
     },
@@ -57,21 +61,39 @@ export const getColumns = (options: AllOptionsRepository) => {
       title: "Ukuran",
       dataIndex: "size",
       key: "size",
+      align: "right",
       filters: size.size.map((sz) => ({
         text: `${sz} cm`,
         value: sz,
       })),
       sorter: {
-        compare: (a, b) => a.size.length - b.size.length,
+        compare: (a, b) => parseInt(a.size) - parseInt(b.size),
         multiple: 2,
       },
-      render: (value) => `${value} cm`,
+      render: (value) => {
+        if (value <= 70) {
+          return <Tag color="red">{`${value} cm`}</Tag>;
+        } else if (value >= 80 && value <= 120) {
+          return <Tag color="orange">{`${value} cm`}</Tag>;
+        } else if (value >= 130) {
+          return <Tag color="green">{`${value} cm`}</Tag>;
+        }
+
+        return `${value} cm`;
+      },
       onFilter: (value, record) => record.size === value,
     },
     {
-      title: "Tanggal",
+      title: "Terakhir Diubah",
       dataIndex: "tgl_parsed",
       key: "tgl_parsed",
+      align: "center",
+      sorter: {
+        compare: (a, b) =>
+          dayjs(a.tgl_parsed as string).unix() -
+          dayjs(b.tgl_parsed as string).unix(),
+        multiple: 1,
+      },
       render: (value) => dayjs(value).format("DD MMM YYYY"),
     },
   ];

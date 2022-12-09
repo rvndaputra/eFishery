@@ -34,7 +34,7 @@ const Home: FC = () => {
 
   return (
     <HomeProvider emitter={emitter}>
-      <div className="m-5">
+      <div className="m-3 m-lg-5">
         <Title>Daftar Harga Ikan</Title>
         <Header
           onAddListClick={handleOpenAddList}

@@ -17,21 +17,33 @@ interface Dependencies {
 
 const useFishPriceList = (deps?: Dependencies) => {
   const { variables } = deps ?? {};
-  const { limit = 10, offset = 0 } = variables ?? {};
+  /**
+   * it's not possible to use `limit` and `offset` for table pagination cause we can't get the total amount of data (API limitation)
+   * however, it's still possible to implement pagination with infinite scroll instead
+   */
+  const { limit, offset, search } = variables ?? {};
 
   const _offset = useRef(offset);
+  let _search;
+
+  try {
+    _search = JSON.stringify(search);
+  } catch (err) {
+    console.log("err", err);
+  }
 
   const _variables: FishPriceListQueryVariables = {
     limit: limit,
     offset: _offset.current,
+    search: _search as FishPriceListQueryVariables["search"],
   };
 
   const query = qs.stringify(_variables);
 
-  const url = `${EFISHERY_API.list}?${query}`;
+  const url = `${EFISHERY_API.queries.list}?${query}`;
 
   const { data, error, isLoading } = useQuery<FishPriceListQueryResponse[]>({
-    queryKey: ["fish_price_list"],
+    queryKey: ["fish_price_list", query],
     queryFn: async ({ signal }) => {
       const res = await fetch(url, { signal });
 

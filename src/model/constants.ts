@@ -10,9 +10,14 @@ export const STEIN_EFISHERY_URI =
  * @description eFishery API collections
  */
 export const EFISHERY_API = {
-  options: {
-    area: `${STEIN_EFISHERY_URI}/option_area`,
-    size: `${STEIN_EFISHERY_URI}/option_size`,
+  queries: {
+    options: {
+      area: `${STEIN_EFISHERY_URI}/option_area`,
+      size: `${STEIN_EFISHERY_URI}/option_size`,
+    },
+    list: `${STEIN_EFISHERY_URI}/list`,
   },
-  list: `${STEIN_EFISHERY_URI}/list`,
+  mutations: {
+    add_list: `${STEIN_EFISHERY_URI}/Sheet1`,
+  },
 };

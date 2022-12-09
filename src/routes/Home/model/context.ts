@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { AllOptionsRepository } from "../../../model/options";
 import type { HomeEmitter } from "./event";
 
 export interface HomeProviderProps {
@@ -9,5 +10,6 @@ export interface HomeProviderProps {
 export type HomeContextType =
   | {
       emitter: HomeEmitter;
+      options: AllOptionsRepository;
     }
   | undefined;

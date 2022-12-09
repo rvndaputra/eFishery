@@ -9,7 +9,7 @@ const useOptionArea = () => {
   const { data, error, isLoading } = useQuery<OptionAreaQueryResponse[]>({
     queryKey: ["option_area"],
     queryFn: async ({ signal }) => {
-      const res = await fetch(EFISHERY_API.options.area, { signal });
+      const res = await fetch(EFISHERY_API.queries.options.area, { signal });
 
       if (!res.ok) {
         throw new Error("Network response was not oke");

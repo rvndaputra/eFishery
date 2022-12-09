@@ -3,20 +3,24 @@ import type {
   OptionSizeQueryResponse,
 } from "../../../model/options";
 
-const normalizeOptSize = (data: OptionSizeQueryResponse[] | undefined) => {
-  if (!data) return [];
+const normalizeOptSize = (
+  data: OptionSizeQueryResponse[] | undefined
+): NormalizedOptionSize => {
+  if (!data) return { size: [], __raw: [] };
 
-  return data.reduce<NormalizedOptionSize>(
-    (acc, curr) => {
-      if (!curr.size) return acc;
+  return data
+    .sort((a, b) => parseInt(a.size || "") - parseInt(b.size || ""))
+    .reduce<NormalizedOptionSize>(
+      (acc, curr) => {
+        if (!curr.size) return acc;
 
-      acc.size.push(parseInt(curr.size));
-      acc.__raw.push({ size: curr.size });
+        acc.size.push(curr.size);
+        acc.__raw.push({ size: curr.size });
 
-      return acc;
-    },
-    { size: [], __raw: [] }
-  );
+        return acc;
+      },
+      { size: [], __raw: [] }
+    );
 };
 
 export default normalizeOptSize;

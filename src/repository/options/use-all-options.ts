@@ -3,12 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { EFISHERY_API } from "../../model";
 import type {
+  AllOptionsRepository,
   OptionAreaQueryResponse,
   OptionSizeQueryResponse,
 } from "../../model/options";
 import { normalizeOptArea, normalizeOptSize } from "./normalizer";
 
-const useAllOptions = () => {
+const useAllOptions = (): AllOptionsRepository => {
   const {
     data = [],
     error,
@@ -16,8 +17,12 @@ const useAllOptions = () => {
   } = useQuery<[OptionAreaQueryResponse[], OptionSizeQueryResponse[]]>({
     queryKey: ["all_options"],
     queryFn: async ({ signal }) => {
-      const respArea = await fetch(EFISHERY_API.options.area, { signal });
-      const respSize = await fetch(EFISHERY_API.options.size, { signal });
+      const respArea = await fetch(EFISHERY_API.queries.options.area, {
+        signal,
+      });
+      const respSize = await fetch(EFISHERY_API.queries.options.size, {
+        signal,
+      });
 
       const area = await respArea.json();
       const size = await respSize.json();

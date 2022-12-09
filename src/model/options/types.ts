@@ -1,15 +1,31 @@
 import { NoUndefinedField } from "../types";
 
 // ==============================
+//  Repository Types
+// ==============================
+export interface AllOptionsRepository {
+  data: {
+    area: NormalizedOptionArea;
+    size: NormalizedOptionSize;
+  };
+  error: unknown;
+  loading: boolean;
+}
+
+// ==============================
 //  Normalized Types
 // ==============================
 export interface NormalizedOptionArea {
-  [key: string]: unknown;
+  area: {
+    [key: string]: unknown;
+  };
+  cities: string[];
+  provinces: string[];
   __raw: NoUndefinedField<OptionAreaQueryResponse>[];
 }
 
 export interface NormalizedOptionSize {
-  size: number[];
+  size: string[];
   __raw: NoUndefinedField<OptionSizeQueryResponse>[];
 }
 

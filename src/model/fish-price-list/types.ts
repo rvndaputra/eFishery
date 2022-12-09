@@ -20,4 +20,23 @@ export interface FishPriceListQueryResponse {
   timestamp: string | null;
 }
 
-export interface FishPriceListQueryVariables extends OptionalReqParams {}
+export interface FishPriceListQueryVariables extends OptionalReqParams {
+  search?: {
+    komoditas?: string;
+    area_provinsi?: string;
+    area_kota?: string;
+  };
+}
+
+// ==============================
+//  Mutation Types
+// ==============================
+export interface AddFishPriceListMutation {
+  uuid: string | null;
+  komoditas: string | null;
+  area_provinsi: string | null;
+  area_kota: string | null;
+  size: string | null;
+  price: string | null;
+  tgl_parsed: Scalars["Date"] | null;
+}

@@ -14,6 +14,6 @@ export type Scalars = {
 //    Stein Types
 // ==============================
 export interface OptionalReqParams {
-  limit: number;
-  offset: number;
+  limit?: number;
+  offset?: number;
 }

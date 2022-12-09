@@ -9,7 +9,7 @@ const useOptionSize = () => {
   const { data, error, isLoading } = useQuery<OptionSizeQueryResponse[]>({
     queryKey: ["option_size"],
     queryFn: async ({ signal }) => {
-      const res = await fetch(EFISHERY_API.options.size, { signal });
+      const res = await fetch(EFISHERY_API.queries.options.size, { signal });
 
       if (!res.ok) {
         throw new Error("Network response was not oke");

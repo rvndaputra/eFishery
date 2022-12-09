@@ -7,15 +7,15 @@ const normalize = (data: FishPriceListQueryResponse[] | undefined) => {
   if (!data) return [];
 
   return data.reduce<NormalizedFishPriceList[]>((acc, curr) => {
-    if (!curr || !curr.uuid) return acc;
+    if (!curr) return acc;
 
     acc.push({
-      area_kota: curr.area_kota || "",
-      area_provinsi: curr.area_provinsi || "",
-      komoditas: curr.komoditas || "",
+      area_kota: curr.area_kota || "-",
+      area_provinsi: curr.area_provinsi || "-",
+      komoditas: curr.komoditas || "-",
       price: curr.price || "0",
       size: curr.size || "0",
-      tgl_parsed: curr.tgl_parsed || "",
+      tgl_parsed: curr.tgl_parsed || new Date(),
       timestamp: curr.timestamp || "",
       uuid: curr.uuid || "0",
     });
